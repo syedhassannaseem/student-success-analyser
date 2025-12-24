@@ -39,6 +39,7 @@ plt.xlabel("Success Status")
 plt.ylabel("Attendance Percent")
 plt.title("Boxplot of Attendance Percent by Success Status with Counts")
 plt.grid(True)
+plt.savefig("Boxplot_Attendance_Success.png", dpi=300, bbox_inches="tight")
 plt.show()
 
 
@@ -81,6 +82,7 @@ plt.xticks([0,1], ["Not Successful", "Successful"])
 plt.yticks([0,1], ["Not Successful", "Successful"])
 plt.ylabel('True label', fontsize=16 )
 plt.xlabel('Predicted label',fontsize=16)
+plt.savefig("Confusion_Matrix.png", dpi=300, bbox_inches="tight")
 plt.show()
 
 # k-Means Clustering
@@ -101,6 +103,7 @@ plt.xlabel("Attendance Percent")
 plt.ylabel("Final Exam Score")
 plt.title("KMeans Clustering: Student Success Groups")
 plt.legend()
+plt.savefig("K-Means.png", dpi=300, bbox_inches="tight")
 plt.show()
 
 
@@ -123,6 +126,7 @@ plt.ylabel("Principal Component 2")
 plt.title("PCA of Student Success Data")
 plt.grid(True)
 plt.legend()
+plt.savefig("PCA.png", dpi=300, bbox_inches="tight")
 plt.show()
 
 # Predicting Success Status for New Data
