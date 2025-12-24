@@ -170,4 +170,4 @@ Use Pipeline to avoid data leakage
 ## 🚀 How to Run the Project
 1. Clone the repository:
 
-   git clone https://github.com/syedhassannaseem/Ecommerce-Sales-Data-Visualization.git
+   git clone https://github.com/syedhassannaseem/student-success-analyser.git
