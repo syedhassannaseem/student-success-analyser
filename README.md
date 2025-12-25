@@ -52,6 +52,8 @@ Groups students into performance-based clusters
 - NumPy
 
 - Matplotlib
+  
+- Seaborn
 
 - Scikit-learn
 
