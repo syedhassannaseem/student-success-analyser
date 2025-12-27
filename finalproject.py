@@ -12,7 +12,7 @@ from sklearn.cluster import KMeans
 # Load the dataset
 
 try:
-    df = pd.read_csv("student_success.csv")
+    df = pd.read_csv("projects\\student_success.csv")
 except FileNotFoundError:
     print("Error: The file 'student_success.csv' was not found.")
     exit()
@@ -85,27 +85,42 @@ plt.xlabel('Predicted label',fontsize=16)
 plt.savefig("Confusion_Matrix.png", dpi=300, bbox_inches="tight")
 plt.show()
 
+
+
 # k-Means Clustering
 
 km = KMeans(n_clusters=3, random_state=42, n_init=10)
 df["Groups"] = km.fit_predict(x)  # 0,1,2
-
 # Numeric cluster labels ko custom names mein map karo
-group_names = {0: "Week", 1: "Average", 2: "Excellent"}
-df["Groups_Name"] = df["Groups"].map(group_names)
+df_plot = df.sample(400, random_state=42)
+group_names = {
+    0: "Weak",
+    1: "Average",
+    2: "Excellent"
+}
+df_plot["Groups_Name"] = df_plot["Groups"].map(group_names)
 
 # Scatter plot: attendance vs final_exam_score with groups
-for group_name in df["Groups_Name"].unique():
-    group_data = df[df["Groups_Name"] == group_name]
+for group_name in df_plot["Groups_Name"].unique():
+    group_data = df_plot[df_plot["Groups_Name"] == group_name]
     plt.scatter(group_data["attendance_percent"], group_data["final_exam_score"], label=group_name, alpha=0.6)
-
+# for centoriods
+centers = km.cluster_centers_
+plt.scatter(
+    centers[:, 0],
+    centers[:, 1],
+    s=300,
+    marker="X",
+    label="Centroids"
+)
 plt.xlabel("Attendance Percent")
 plt.ylabel("Final Exam Score")
 plt.title("KMeans Clustering: Student Success Groups")
-plt.legend()
+plt.legend(    
+    loc="upper left")
+plt.grid(True)
 plt.savefig("K-Means.png", dpi=300, bbox_inches="tight")
 plt.show()
-
 
 # Principal Component Analysis (PCA)
 scaler = StandardScaler()
@@ -113,16 +128,13 @@ scaled_data = scaler.fit_transform(df[features])
 pca = PCA(n_components=2)
 pca_data = pca.fit_transform(scaled_data)
 pcs_df = pd.DataFrame(pca_data , columns=["PCA1","PCA2"])
-
 print(pcs_df)
 perce = pca.explained_variance_ratio_ * 100
 np.round(perce,2)
-
 plt.figure(figsize=(8,6))
-plt.scatter(pcs_df.index, pcs_df["PCA1"], color='blue', alpha=0.7, label='PCA1')
-plt.scatter(pcs_df.index, pcs_df["PCA2"], color='green', alpha=0.7, label='PCA2')
-plt.xlabel("Principal Component 1")
-plt.ylabel("Principal Component 2")
+plt.scatter(pcs_df["PCA1"], pcs_df["PCA2"], color='blue', alpha=0.7, label='[PCA1, PCA2]')
+plt.xlabel(f"PCA1 - {perce[0]:.2f}% Variance")
+plt.ylabel(f"PCA2 - {perce[1]:.2f}% Variance")
 plt.title("PCA of Student Success Data")
 plt.grid(True)
 plt.legend()
